@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides"
+  xsi:type="MailApp">
+
+  <Id>a4567890-bcde-1234-5678-90abcdef1240</Id>
+  <Version>1.0.0.7</Version>
+  <ProviderName>Liu Haoran</ProviderName>
+  <DefaultLocale>zh-TW</DefaultLocale>
+  <DisplayName DefaultValue="發送檢查器" />
+  <Description DefaultValue="發送前強制檢查收件人與附件" />
+  <IconUrl DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-64.png" />
+
+  <Hosts>
+    <Host Name="Mailbox" />
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.5" />
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteItem</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit" />
+  </Rule>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox" />
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="funcUrl" />
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadGroup">
+                <Label resid="groupLabel" />
+                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Label resid="paneButtonLabel" />
+                  <Supertip>
+                    <Title resid="paneButtonLabel" />
+                    <Description resid="paneButtonDesc" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16" />
+                    <bt:Image size="32" resid="icon32" />
+                    <bt:Image size="80" resid="icon80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskpaneUrl" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-16.png" />
+        <bt:Image id="icon32" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-32.png" />
+        <bt:Image id="icon80" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="funcUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/commands/commands.html" />
+        <bt:Url id="taskpaneUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel" DefaultValue="發送檢查" />
+        <bt:String id="paneButtonLabel" DefaultValue="開啟檢查清單" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="paneButtonDesc" DefaultValue="開啟側邊欄以確認收件人與附件" />
+      </bt:LongStrings>
+    </Resources>
+
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.10">
+          <bt:Set Name="Mailbox" />
+        </bt:Sets>
+      </Requirements>
+
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <Runtimes>
+            <Runtime resid="funcUrl">
+              <Override type="javascript" resid="funcUrl"/>
+            </Runtime>
+          </Runtimes>
+
+          <DesktopFormFactor>
+            <FunctionFile resid="funcUrl" />
+
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgComposeGroup">
+                  <Label resid="groupLabel" />
+                  <Control xsi:type="Button" id="msgComposeOpenPaneButton">
+                    <Label resid="paneButtonLabel" />
+                    <Supertip>
+                      <Title resid="paneButtonLabel" />
+                      <Description resid="paneButtonDesc" />
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="icon16" />
+                      <bt:Image size="32" resid="icon32" />
+                      <bt:Image size="80" resid="icon80" />
+                    </Icon>
+                    <Action xsi:type="ShowTaskpane">
+                      <SourceLocation resid="taskpaneUrl" />
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnMessageSend" FunctionName="validateSend" SendMode="Block" />
+              </LaunchEvents>
+              <SourceLocation resid="funcUrl" />
+            </ExtensionPoint>
+
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+
+      <Resources>
+        <bt:Images>
+          <bt:Image id="icon16" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-16.png" />
+          <bt:Image id="icon32" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-32.png" />
+          <bt:Image id="icon80" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-80.png" />
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="funcUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/commands/commands.html" />
+          <bt:Url id="taskpaneUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html" />
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="groupLabel" DefaultValue="發送檢查" />
+          <bt:String id="paneButtonLabel" DefaultValue="開啟檢查清單" />
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="paneButtonDesc" DefaultValue="開啟側邊欄以確認收件人與附件" />
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
