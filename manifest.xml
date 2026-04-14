@@ -10,7 +10,7 @@
   <Version>1.0.0.7</Version>
   <ProviderName>Liu Haoran</ProviderName>
   <DefaultLocale>zh-TW</DefaultLocale>
-  <DisplayName DefaultValue="發送檢查器" />
+  <DisplayName DefaultValue="porite" />
   <Description DefaultValue="發送前強制檢查收件人與附件" />
   <IconUrl DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-64.png" />
 
