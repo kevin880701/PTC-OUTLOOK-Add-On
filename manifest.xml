@@ -7,12 +7,12 @@
   xsi:type="MailApp">
 
   <Id>a4567890-bcde-1234-5678-90abcdef1240</Id>
-  <Version>1.0.0.7</Version>
+  <Version>1.0.0.9</Version>
   <ProviderName>Liu Haoran</ProviderName>
   <DefaultLocale>zh-TW</DefaultLocale>
   <DisplayName DefaultValue="porite" />
   <Description DefaultValue="發送前強制檢查收件人與附件" />
-  <IconUrl DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-64.png" />
+  <IconUrl DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-64.png?v=1.0.0.8" />
 
   <Hosts>
     <Host Name="Mailbox" />
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html"/>
+        <SourceLocation DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -79,13 +79,13 @@
 
     <Resources>
       <bt:Images>
-        <bt:Image id="icon16" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-16.png" />
-        <bt:Image id="icon32" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-32.png" />
-        <bt:Image id="icon80" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-80.png" />
+        <bt:Image id="icon16" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-16.png?v=1.0.0.8" />
+        <bt:Image id="icon32" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-32.png?v=1.0.0.8" />
+        <bt:Image id="icon80" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-80.png?v=1.0.0.8" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="funcUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/commands/commands.html" />
-        <bt:Url id="taskpaneUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html" />
+        <bt:Url id="funcUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/commands/commands.html" />
+        <bt:Url id="taskpaneUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="groupLabel" DefaultValue="發送檢查" />
@@ -150,13 +150,13 @@
 
       <Resources>
         <bt:Images>
-          <bt:Image id="icon16" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-16.png" />
-          <bt:Image id="icon32" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-32.png" />
-          <bt:Image id="icon80" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/assets/icon-80.png" />
+          <bt:Image id="icon16" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-16.png?v=1.0.0.8" />
+          <bt:Image id="icon32" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-32.png?v=1.0.0.8" />
+          <bt:Image id="icon80" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-80.png?v=1.0.0.8" />
         </bt:Images>
         <bt:Urls>
-          <bt:Url id="funcUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/commands/commands.html" />
-          <bt:Url id="taskpaneUrl" DefaultValue="https://icy-moss-034796200.2.azurestaticapps.net/taskpane.html" />
+          <bt:Url id="funcUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/commands/commands.html" />
+          <bt:Url id="taskpaneUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/taskpane.html" />
         </bt:Urls>
         <bt:ShortStrings>
           <bt:String id="groupLabel" DefaultValue="發送檢查" />
