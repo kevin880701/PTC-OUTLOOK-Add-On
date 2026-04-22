@@ -10,7 +10,7 @@
   <Version>1.0.0.9</Version>
   <ProviderName>Liu Haoran</ProviderName>
   <DefaultLocale>zh-TW</DefaultLocale>
-  <DisplayName DefaultValue="porite" />
+  <DisplayName DefaultValue="Antimisdeliv" />
   <Description DefaultValue="發送前強制檢查收件人與附件" />
   <IconUrl DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-64.png?v=1.0.0.8" />
 
