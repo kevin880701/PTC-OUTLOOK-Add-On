@@ -56,17 +56,54 @@ function loadItemData() {
         safeGet(cb => item.bcc.getAsync(cb)),
         safeGet(cb => item.getAttachmentsAsync(cb)),
         safeGet(cb => item.subject.getAsync(cb)),
-        safeGet(cb => item.body.getAsync(Office.CoercionType.Text, cb))
-    ]).then(([from, to, cc, bcc, attachments, subject, body]) => {
+        safeGet(cb => item.body.getAsync(Office.CoercionType.Html, cb))
+    ]).then(([from, to, cc, bcc, attachments, subject, htmlBody]) => {
         
         to = to || [];
         cc = cc || [];
         bcc = bcc || [];
         attachments = attachments || [];
 
-        // Render Subject and Body
+        // Render Subject
         document.getElementById("subject-container").innerText = subject || "(無主旨)";
-        document.getElementById("body-container").innerText = body || "(無內容)";
+
+        // 解析 HTML 內容
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlBody || "", 'text/html');
+        
+        // 1. 偵測內文中的連結 (可能是雲端附件)
+        const detectedLinks = [];
+        const fileExtensions = ['svg', 'pdf', 'docx', 'xlsx', 'pptx', 'zip', 'rar', '7z', 'png', 'jpg', 'jpeg', 'gif'];
+        
+        doc.querySelectorAll('a').forEach(a => {
+            const text = a.innerText.trim();
+            const href = a.getAttribute('href') || "";
+            const isFile = fileExtensions.some(ext => text.toLowerCase().endsWith('.' + ext) || href.toLowerCase().includes('.' + ext));
+            
+            if (isFile && text) {
+                detectedLinks.push({
+                    name: text,
+                    size: 0,
+                    id: href,
+                    isDetected: true
+                });
+            }
+        });
+
+        // 2. 取得乾淨文字內容 (用於內容檢查區)
+        // 移除這些被偵測為檔案的節點
+        doc.querySelectorAll('a').forEach(a => {
+            const text = a.innerText.trim();
+            if (fileExtensions.some(ext => text.toLowerCase().endsWith('.' + ext))) {
+                a.remove();
+            }
+        });
+        
+        const cleanText = doc.body.innerText.trim();
+        document.getElementById("body-container").innerText = cleanText || "(無內容)";
+        
+        // 3. 整合附件清單
+        const finalAttachments = [...attachments, ...detectedLinks];
 
         const senderEmail = (from && from.emailAddress) ? from.emailAddress : "";
         const senderDomain = getDomain(senderEmail);
@@ -76,8 +113,8 @@ function loadItemData() {
         renderGroupedList("cc-list", cc, senderDomain);
         renderGroupedList("bcc-list", bcc, senderDomain);
         
-        // 執行附件渲染
-        renderAttachments("attachment-list", attachments);
+        // 執行附件渲染 (使用整合後的清單)
+        renderAttachments("attachment-list", finalAttachments);
 
         checkAllChecked();
 
@@ -256,15 +293,16 @@ function renderAttachments(containerId, attachments) {
         rowDiv.className = "item-row";
         
         const iconPath = getFileIcon(att.name);
+        const typeTag = att.isDetected ? `<span class="tag internal" style="font-size:8px; margin-left:5px;">Content</span>` : "";
 
         // 附件預設不勾選，要求使用者點擊確認
         rowDiv.innerHTML = `
             <input type='checkbox' class='verify-check' onchange='checkAllChecked()'>
             <div class="item-content">
                 <div class="name">
-                    ${att.name}
+                    ${att.name} ${typeTag}
                 </div>
-                <div class="email">${(att.size / 1024).toFixed(1)} KB</div>
+                <div class="email">${att.isDetected ? "來自郵件內容的連結" : (att.size / 1024).toFixed(1) + " KB"}</div>
             </div>
         `;
         container.appendChild(rowDiv);

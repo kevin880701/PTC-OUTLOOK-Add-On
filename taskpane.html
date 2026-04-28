@@ -88,7 +88,9 @@
         .tag.external { background-color: var(--tag-external-bg); color: var(--tag-external-text); }
         .tag.internal { background-color: var(--tag-internal-bg); color: var(--tag-internal-text); }
 
-        .item-row { display: flex; align-items: flex-start; padding: 6px 12px 6px 38px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .item-row { display: flex; align-items: flex-start; padding: 6px 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        /* 只有在網域分組下的項目才需要縮排 */
+        .domain-group .item-row { padding-left: 38px; }
         .item-row:last-child { border-bottom: none; }
         
         .item-row input[type="checkbox"] { margin-top: 3px; margin-right: 10px; width: 16px; height: 16px; accent-color: var(--color-brand); cursor: pointer; }
@@ -116,6 +118,7 @@
 
         #status-msg { display: none; text-align: center; padding: 20px; color: var(--text-success); font-weight: bold; }
         #error-log { color: red; font-size: 12px; margin-top: 10px; white-space: pre-wrap; display: none; border: 1px solid red; padding: 5px;}
+        
     </style>
 </head>
 <body>
