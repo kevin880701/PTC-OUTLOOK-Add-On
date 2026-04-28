@@ -73,16 +73,22 @@
         .domain-group:last-child { border-bottom: none; }
 
         .domain-header {
-            padding: 6px 12px; font-size: 12px; font-weight: 600;
+            padding: 6px 12px; font-size: 13px; font-weight: 600;
             color: var(--text-secondary); background-color: var(--header-domain-bg);
             display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .domain-header input[type="checkbox"] {
+            margin: 0 10px 0 0; width: 16px; height: 16px; cursor: pointer;
+            accent-color: var(--color-brand);
         }
 
         .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
         .tag.external { background-color: var(--tag-external-bg); color: var(--tag-external-text); }
         .tag.internal { background-color: var(--tag-internal-bg); color: var(--tag-internal-text); }
 
-        .item-row { display: flex; align-items: flex-start; padding: 8px 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .item-row { display: flex; align-items: flex-start; padding: 6px 12px 6px 38px; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .item-row:last-child { border-bottom: none; }
         
         .item-row input[type="checkbox"] { margin-top: 3px; margin-right: 10px; width: 16px; height: 16px; accent-color: var(--color-brand); cursor: pointer; }

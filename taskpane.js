@@ -138,19 +138,23 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
             ? `<span class="tag external">External</span>` 
             : `<span class="tag internal">Internal</span>`;
         
-        headerDiv.innerHTML = `<span>@${domain}</span> ${tagHtml}`;
+        // 將勾選框移至 Header
+        const checkedState = isExternal ? "" : "checked";
+        headerDiv.innerHTML = `
+            <div style="display: flex; align-items: center;">
+                <input type='checkbox' class='verify-check' ${checkedState} onchange='checkAllChecked()'>
+                <span>@${domain}</span>
+            </div>
+            ${tagHtml}
+        `;
         groupDiv.appendChild(headerDiv);
 
         recipients.forEach((p, i) => {
             const rowDiv = document.createElement("div");
             rowDiv.className = "item-row";
             
-            // 如果是 External -> 預設不勾 ("")
-            // 如果是 Internal -> 預設勾選 ("checked")
-            const checkedState = isExternal ? "" : "checked";
-            
+            // 移除個別勾選框，並依賴 CSS 的 padding 縮進
             rowDiv.innerHTML = `
-                <input type='checkbox' class='verify-check' ${checkedState} onchange='checkAllChecked()'>
                 <div class="item-content">
                     <div class="name">${p.displayName || p.emailAddress}</div>
                     <div class="email">${p.emailAddress}</div>
