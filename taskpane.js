@@ -28,7 +28,7 @@ function loadItemData() {
     const item = Office.context.mailbox.item;
 
     if (!item) {
-        logError("無法讀取郵件物件 (Item is null)");
+        logError("Unable to read mail object (Item is null)");
         return;
     }
 
@@ -65,7 +65,7 @@ function loadItemData() {
         attachments = attachments || [];
 
         // Render Subject
-        document.getElementById("subject-container").innerText = subject || "(無主旨)";
+        document.getElementById("subject-container").innerText = subject || "(No Subject)";
 
         // 解析 HTML 內容
         const parser = new DOMParser();
@@ -100,7 +100,7 @@ function loadItemData() {
         });
         
         const cleanText = doc.body.innerText.trim();
-        document.getElementById("body-container").innerText = cleanText || "(無內容)";
+        document.getElementById("body-container").innerText = cleanText || "(No Content)";
         
         // 3. 整合附件清單
         const finalAttachments = [...attachments, ...detectedLinks];
@@ -126,7 +126,7 @@ function loadItemData() {
 function renderSender(containerId, data) {
     const container = document.getElementById(containerId);
     if (!data) {
-        container.innerHTML = "<div class='empty-msg'>寄件者資訊讀取中或未設定</div>";
+        container.innerHTML = "<div class='empty-msg'>Sender info loading or not set</div>";
         return;
     }
     container.innerHTML = `
@@ -143,7 +143,7 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
     container.innerHTML = "";
 
     if (!dataArray || dataArray.length === 0) {
-        container.innerHTML = "<div class='empty-msg'>(無)</div>";
+        container.innerHTML = "<div class='empty-msg'>(None)</div>";
         return;
     }
 
@@ -226,7 +226,7 @@ function enableButton() {
     const btn = document.getElementById("btnVerify");
     btn.disabled = false;
     btn.classList.add("active");
-    btn.innerText = "確認完成並送出";
+    btn.innerText = "Verification complete";
 }
 
 function disableButton() {
@@ -238,7 +238,7 @@ function disableButton() {
     let uncheckCount = 0;
     all.forEach(c => { if(!c.checked) uncheckCount++; });
     
-    btn.innerText = uncheckCount > 0 ? `尚有 ${uncheckCount} 個項目未確認` : "請勾選所有項目...";
+    btn.innerText = uncheckCount > 0 ? `${uncheckCount} items left to verify` : "Please check all items...";
 }
 
 function markAsVerified() {
@@ -250,7 +250,7 @@ function markAsVerified() {
                 document.getElementById("btn-area").style.display = "none";
                 document.getElementById("status-msg").style.display = "block";
             } else {
-                logError("儲存失敗: " + saveResult.error.message);
+                logError("Save failed: " + saveResult.error.message);
             }
         });
     });
@@ -284,7 +284,7 @@ function renderAttachments(containerId, attachments) {
     container.innerHTML = "";
 
     if (!attachments || attachments.length === 0) {
-        container.innerHTML = "<div class='empty-msg'>(無附件)</div>";
+        container.innerHTML = "<div class='empty-msg'>(No Attachments)</div>";
         return;
     }
 
@@ -302,7 +302,7 @@ function renderAttachments(containerId, attachments) {
                 <div class="name">
                     ${att.name} ${typeTag}
                 </div>
-                <div class="email">${att.isDetected ? "來自郵件內容的連結" : (att.size / 1024).toFixed(1) + " KB"}</div>
+                <div class="email">${att.isDetected ? "Link from body content" : (att.size / 1024).toFixed(1) + " KB"}</div>
             </div>
         `;
         container.appendChild(rowDiv);

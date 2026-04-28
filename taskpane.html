@@ -124,60 +124,60 @@
 <body>
 
     <header>
-        <h3>發送前檢查</h3>
-        <div class="subtitle">外部網域請務必勾選確認</div>
+        <h3>Pre-send Check</h3>
+        <div class="subtitle">Please verify all recipients and attachments</div>
     </header>
 
     <div id="error-log"></div>
 
     <div class="section">
-        <div class="section-title">主旨 (Subject)</div>
+        <div class="section-title">Subject</div>
         <div id="subject-container" class="item-row" style="padding: 10px 12px; font-weight: bold;">
-            讀取中...
+            Loading...
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">寄件者 (From)</div>
+        <div class="section-title">From</div>
         <div id="from-container" class="item-row" style="padding: 10px 12px;">
-            <div class="empty-msg">讀取中...</div>
+            <div class="empty-msg">Loading...</div>
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">收件人 (To)</div>
-        <div id="to-list">讀取中...</div>
+        <div class="section-title">To</div>
+        <div id="to-list">Loading...</div>
     </div>
 
     <div class="section">
-        <div class="section-title">副本 (Cc)</div>
-        <div id="cc-list">讀取中...</div>
+        <div class="section-title">Cc</div>
+        <div id="cc-list">Loading...</div>
     </div>
 
     <div class="section">
-        <div class="section-title">密件副本 (Bcc)</div>
-        <div id="bcc-list">讀取中...</div>
+        <div class="section-title">Bcc</div>
+        <div id="bcc-list">Loading...</div>
     </div>
 
     <div class="section">
-        <div class="section-title">附件 (Attachments)</div>
-        <div id="attachment-list">讀取中...</div>
+        <div class="section-title">Attachments</div>
+        <div id="attachment-list">Loading...</div>
     </div>
 
     <div class="section">
-        <div class="section-title">內容 (Content)</div>
+        <div class="section-title">Content</div>
         <div id="body-container" style="padding: 10px 12px; font-size: 12px; overflow-wrap: break-word; max-height: 150px; overflow-y: auto;">
-            讀取中...
+            Loading...
         </div>
     </div>
     
     <div id="status-msg">
         <div style="font-size: 24px;">🎉</div>
-        檢查完成，請傳送！
+        Check complete, you're ready to send!
     </div>
 
     <div class="btn-container" id="btn-area">
-        <button id="btnVerify" disabled>請檢查外部收件人...</button>
+        <button id="btnVerify" disabled>Please check all items...</button>
     </div>
 
     <script src="taskpane.js"></script>

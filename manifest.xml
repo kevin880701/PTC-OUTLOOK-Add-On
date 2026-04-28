@@ -9,9 +9,9 @@
   <Id>a4567890-bcde-1234-5678-90abcdef1240</Id>
   <Version>1.0.1.0</Version>
   <ProviderName>Liu Haoran</ProviderName>
-  <DefaultLocale>zh-TW</DefaultLocale>
-  <DisplayName DefaultValue="Antimisdeliv" />
-  <Description DefaultValue="發送前強制檢查收件人與附件" />
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Anti-misdelivery" />
+  <Description DefaultValue="Force check recipients and attachments before sending" />
   <IconUrl DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-64.png?v=1.0.1.0" />
 
   <Hosts>
@@ -90,11 +90,11 @@
         <bt:Url id="taskpaneUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/taskpane.html" />
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="groupLabel" DefaultValue="發送檢查" />
-        <bt:String id="paneButtonLabel" DefaultValue="開啟檢查清單" />
+        <bt:String id="groupLabel" DefaultValue="Send Check" />
+        <bt:String id="paneButtonLabel" DefaultValue="Open Checklist" />
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="paneButtonDesc" DefaultValue="開啟側邊欄以確認收件人與附件" />
+        <bt:String id="paneButtonDesc" DefaultValue="Open the sidebar to confirm recipients and attachments" />
       </bt:LongStrings>
     </Resources>
 
@@ -163,11 +163,11 @@
           <bt:Url id="taskpaneUrl" DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/taskpane.html" />
         </bt:Urls>
         <bt:ShortStrings>
-          <bt:String id="groupLabel" DefaultValue="發送檢查" />
-          <bt:String id="paneButtonLabel" DefaultValue="開啟檢查清單" />
+          <bt:String id="groupLabel" DefaultValue="Send Check" />
+          <bt:String id="paneButtonLabel" DefaultValue="Open Checklist" />
         </bt:ShortStrings>
         <bt:LongStrings>
-          <bt:String id="paneButtonDesc" DefaultValue="開啟側邊欄以確認收件人與附件" />
+          <bt:String id="paneButtonDesc" DefaultValue="Open the sidebar to confirm recipients and attachments" />
         </bt:LongStrings>
       </Resources>
     </VersionOverrides>
