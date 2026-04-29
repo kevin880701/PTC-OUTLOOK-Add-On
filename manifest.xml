@@ -10,7 +10,7 @@
   <Version>1.0.1.1</Version>
   <ProviderName>Liu Haoran</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Anti-misdelivery" />
+  <DisplayName DefaultValue="Antimisdelivery" />
   <Description DefaultValue="Force check recipients and attachments before sending" />
   <IconUrl DefaultValue="https://red-tree-099d3fe00.6.azurestaticapps.net/assets/icon-64.png?v=1.0.1.0" />
 
