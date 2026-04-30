@@ -17,9 +17,9 @@ function validateSend(event) {
         } else {
             // B. 還沒驗證 -> 阻擋
             // 系統會自動跳出提示框，顯示下方的 errorMessage
-            event.completed({ 
-                allowEvent: false, 
-                errorMessage: "Please click the 'Open Checklist' button above to confirm recipients and attachments before sending." 
+            event.completed({
+                allowEvent: false,
+                errorMessage: "Please click the 'Antimisdeliv' button above to confirm recipients and attachments before sending."
             });
         }
     });

@@ -58,7 +58,7 @@ function loadItemData() {
         safeGet(cb => item.subject.getAsync(cb)),
         safeGet(cb => item.body.getAsync(Office.CoercionType.Html, cb))
     ]).then(([from, to, cc, bcc, attachments, subject, htmlBody]) => {
-        
+
         to = to || [];
         cc = cc || [];
         bcc = bcc || [];
@@ -70,16 +70,16 @@ function loadItemData() {
         // 解析 HTML 內容
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlBody || "", 'text/html');
-        
+
         // 1. 偵測內文中的連結 (可能是雲端附件)
         const detectedLinks = [];
         const fileExtensions = ['svg', 'pdf', 'docx', 'xlsx', 'pptx', 'zip', 'rar', '7z', 'png', 'jpg', 'jpeg', 'gif'];
-        
+
         doc.querySelectorAll('a').forEach(a => {
             const text = a.innerText.trim();
             const href = a.getAttribute('href') || "";
             const isFile = fileExtensions.some(ext => text.toLowerCase().endsWith('.' + ext) || href.toLowerCase().includes('.' + ext));
-            
+
             if (isFile && text) {
                 detectedLinks.push({
                     name: text,
@@ -98,21 +98,21 @@ function loadItemData() {
                 a.remove();
             }
         });
-        
+
         const cleanText = doc.body.innerText.trim();
         document.getElementById("body-container").innerText = cleanText || "(No Content)";
-        
+
         // 3. 整合附件清單
         const finalAttachments = [...attachments, ...detectedLinks];
 
         const senderEmail = (from && from.emailAddress) ? from.emailAddress : "";
         const senderDomain = getDomain(senderEmail);
-        
+
         renderSender("from-container", from);
         renderGroupedList("to-list", to, senderDomain);
         renderGroupedList("cc-list", cc, senderDomain);
         renderGroupedList("bcc-list", bcc, senderDomain);
-        
+
         // 執行附件渲染 (使用整合後的清單)
         renderAttachments("attachment-list", finalAttachments);
 
@@ -158,7 +158,7 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
     const sortedDomains = Object.keys(groups).sort((a, b) => {
         const aIsExt = a !== senderDomain;
         const bIsExt = b !== senderDomain;
-        return bIsExt - aIsExt; 
+        return bIsExt - aIsExt;
     });
 
     sortedDomains.forEach(domain => {
@@ -170,11 +170,11 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
 
         const headerDiv = document.createElement("div");
         headerDiv.className = "domain-header";
-        
-        const tagHtml = isExternal 
-            ? `<span class="tag external">External</span>` 
+
+        const tagHtml = isExternal
+            ? `<span class="tag external">External</span>`
             : `<span class="tag internal">Internal</span>`;
-        
+
         // 將勾選框移至 Header
         const checkedState = isExternal ? "" : "checked";
         headerDiv.innerHTML = `
@@ -189,7 +189,7 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
         recipients.forEach((p, i) => {
             const rowDiv = document.createElement("div");
             rowDiv.className = "item-row";
-            
+
             // 移除個別勾選框，並依賴 CSS 的 padding 縮進
             rowDiv.innerHTML = `
                 <div class="item-content">
@@ -206,18 +206,18 @@ function renderGroupedList(containerId, dataArray, senderDomain) {
 
 // 移除 renderAttachments 函式
 
-window.checkAllChecked = function() {
+window.checkAllChecked = function () {
     const allCheckboxes = document.querySelectorAll(".verify-check");
     let pass = true;
-    
+
     if (allCheckboxes.length === 0) {
         pass = true;
     } else {
-        allCheckboxes.forEach(c => { 
-            if(!c.checked) pass = false; 
+        allCheckboxes.forEach(c => {
+            if (!c.checked) pass = false;
         });
     }
-    
+
     if (pass) enableButton();
     else disableButton();
 };
@@ -226,18 +226,18 @@ function enableButton() {
     const btn = document.getElementById("btnVerify");
     btn.disabled = false;
     btn.classList.add("active");
-    btn.innerText = "Verification complete";
+    btn.innerText = "Verify information";
 }
 
 function disableButton() {
     const btn = document.getElementById("btnVerify");
     btn.disabled = true;
     btn.classList.remove("active");
-    
+
     const all = document.querySelectorAll(".verify-check");
     let uncheckCount = 0;
-    all.forEach(c => { if(!c.checked) uncheckCount++; });
-    
+    all.forEach(c => { if (!c.checked) uncheckCount++; });
+
     btn.innerText = uncheckCount > 0 ? `${uncheckCount} items left to verify` : "Please check all items...";
 }
 
@@ -259,7 +259,7 @@ function markAsVerified() {
 function getFileIcon(filename) {
     if (!filename) return "assets/ic_file.svg";
     const ext = filename.split('.').pop().toLowerCase();
-    
+
     // File Type Mapping (SVG)
     switch (ext) {
         case 'ai': return "assets/ic_ai.svg";
@@ -291,7 +291,7 @@ function renderAttachments(containerId, attachments) {
     attachments.forEach((att, i) => {
         const rowDiv = document.createElement("div");
         rowDiv.className = "item-row";
-        
+
         const iconPath = getFileIcon(att.name);
         const typeTag = att.isDetected ? `<span class="tag internal" style="font-size:8px; margin-left:5px;">Content</span>` : "";
 
@@ -302,7 +302,7 @@ function renderAttachments(containerId, attachments) {
                 <div class="name">
                     ${att.name} ${typeTag}
                 </div>
-                <div class="email">${att.isDetected ? "Link from body content" : (att.size / 1024).toFixed(1) + " KB"}</div>
+                <div class="email">${att.isDetected ? "Link to OneDrive" : (att.size / 1024).toFixed(1) + " KB"}</div>
             </div>
         `;
         container.appendChild(rowDiv);
