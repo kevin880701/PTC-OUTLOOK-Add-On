@@ -377,16 +377,28 @@ function renderAttachments(containerId, attachments) {
         return;
     }
 
+    // 建立附件區塊的 Header (包含全選勾選框)
+    const headerDiv = document.createElement("div");
+    headerDiv.className = "domain-header"; // 延用 domain-header 的樣式
+    headerDiv.innerHTML = `
+        <div style="display: flex; align-items: center;">
+            <input type='checkbox' class='verify-check' onchange='checkAllChecked()'>
+            <span>Check All Attachments</span>
+        </div>
+        <span class="tag internal" style="background:#e0e0e0; color:#666;">${attachments.length} files</span>
+    `;
+    container.appendChild(headerDiv);
+
     attachments.forEach((att, i) => {
         const rowDiv = document.createElement("div");
         rowDiv.className = "item-row";
+        rowDiv.style.paddingLeft = "30px"; // 讓內容縮排，對齊 Header 的文字
 
         const iconPath = getFileIcon(att.name);
         const typeTag = att.isDetected ? `<span class="tag internal" style="font-size:8px; margin-left:5px;">Content</span>` : "";
 
-        // 附件預設不勾選，要求使用者點擊確認
+        // 移除個別勾選框，改為單純顯示資訊
         rowDiv.innerHTML = `
-            <input type='checkbox' class='verify-check' onchange='checkAllChecked()'>
             <div class="item-content">
                 <div class="name">
                     ${att.name} ${typeTag}
