@@ -5,11 +5,58 @@ Office.onReady((info) => {
         try {
             loadItemData();
             document.getElementById("btnVerify").onclick = markAsVerified;
+
+            // 1. 註冊事件監聽 (收件者與附件可即時同步)
+            const item = Office.context.mailbox.item;
+            item.addHandlerAsync(Office.EventType.RecipientsChanged, onMessageChanged);
+            item.addHandlerAsync(Office.EventType.AttachmentsChanged, onMessageChanged);
+
+            // 2. 設定輪詢 (每 3 秒同步主旨與內容)
+            setInterval(pollForChanges, 3000);
+
         } catch (e) {
             logError("Init Error: " + e.message);
         }
     }
 });
+
+let lastSeenState = null;
+
+async function pollForChanges() {
+    const currentState = await getCurrentState();
+    if (!lastSeenState) {
+        lastSeenState = currentState;
+        return;
+    }
+
+    // 比對是否有任何變動 (主旨、內容、收件者、附件)
+    const isDifferent = (
+        currentState.recipients !== lastSeenState.recipients ||
+        currentState.attachments !== lastSeenState.attachments ||
+        currentState.subject !== lastSeenState.subject ||
+        currentState.bodyFingerprint !== lastSeenState.bodyFingerprint
+    );
+
+    if (isDifferent) {
+        console.log("Detected change via polling, refreshing...");
+        lastSeenState = currentState;
+        onMessageChanged();
+    }
+}
+
+function onMessageChanged() {
+    // When recipients or attachments change, reset verification and reload
+    Office.context.mailbox.item.loadCustomPropertiesAsync((result) => {
+        const props = result.value;
+        props.set("isVerified", false);
+        props.saveAsync(() => {
+            // Re-show verification area and reload data
+            document.getElementById("btn-area").style.display = "block";
+            document.getElementById("status-msg").style.display = "none";
+            loadItemData();
+        });
+    });
+}
 
 function logError(msg) {
     const el = document.getElementById("error-log");
@@ -117,6 +164,11 @@ function loadItemData() {
         renderAttachments("attachment-list", finalAttachments);
 
         checkAllChecked();
+
+        // 更新最後看到的狀態快照，避免輪詢立即觸發
+        getCurrentState().then(state => {
+            lastSeenState = state;
+        });
 
     }).catch(err => {
         logError("Load Data Error: " + err.message);
@@ -241,10 +293,47 @@ function disableButton() {
     btn.innerText = uncheckCount > 0 ? `${uncheckCount} items left to verify` : "Please check all items...";
 }
 
-function markAsVerified() {
+async function getCurrentState() {
+    const item = Office.context.mailbox.item;
+    const safeGet = (apiCall) => new Promise(resolve => {
+        try {
+            apiCall(result => resolve(result.status === Office.AsyncResultStatus.Succeeded ? result.value : null));
+        } catch (e) {
+            resolve(null);
+        }
+    });
+
+    const [to, cc, bcc, attachments, subject, body] = await Promise.all([
+        safeGet(cb => item.to.getAsync(cb)),
+        safeGet(cb => item.cc.getAsync(cb)),
+        safeGet(cb => item.bcc.getAsync(cb)),
+        safeGet(cb => item.getAttachmentsAsync(cb)),
+        safeGet(cb => item.subject.getAsync(cb)),
+        safeGet(cb => item.body.getAsync(Office.CoercionType.Text, cb))
+    ]);
+
+    const getEmails = (arr) => (arr || []).map(p => p.emailAddress.toLowerCase()).sort().join(";");
+    const getAtts = (arr) => (arr || []).map(a => a.name + a.size).sort().join(";");
+
+    // Simple fingerprint for body to detect changes without storing huge strings
+    const bodyFingerprint = body ? `${body.length}_${body.substring(0, 50)}` : "empty";
+
+    return {
+        recipients: `to:${getEmails(to)}|cc:${getEmails(cc)}|bcc:${getEmails(bcc)}`,
+        attachments: getAtts(attachments),
+        subject: subject || "",
+        bodyFingerprint: bodyFingerprint
+    };
+}
+
+async function markAsVerified() {
+    const state = await getCurrentState();
+
     Office.context.mailbox.item.loadCustomPropertiesAsync((result) => {
         const props = result.value;
         props.set("isVerified", true);
+        props.set("verifiedState", JSON.stringify(state));
+
         props.saveAsync((saveResult) => {
             if (saveResult.status === Office.AsyncResultStatus.Succeeded) {
                 document.getElementById("btn-area").style.display = "none";
