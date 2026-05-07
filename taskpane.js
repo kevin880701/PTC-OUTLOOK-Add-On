@@ -118,6 +118,9 @@ function loadItemData() {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlBody || "", 'text/html');
 
+        // 移除所有的 style 與 script 標籤，避免其內容被 innerText 當成純文字讀取出來
+        doc.querySelectorAll('style, script').forEach(el => el.remove());
+
         // 1. 偵測內文中的連結 (可能是雲端附件)
         const detectedLinks = [];
         const fileExtensions = ['svg', 'pdf', 'docx', 'xlsx', 'pptx', 'zip', 'rar', '7z', 'png', 'jpg', 'jpeg', 'gif'];
