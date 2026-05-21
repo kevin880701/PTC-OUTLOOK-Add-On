@@ -8,7 +8,7 @@
 
   <Id>a4567890-bcde-1234-5678-90abcdef1240</Id>
   <Version>1.0.1.5</Version>
-  <ProviderName>Liu Haoran</ProviderName>
+  <ProviderName>AST</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Antimisdeliv" />
   <Description DefaultValue="Force check recipients and attachments before sending" />
